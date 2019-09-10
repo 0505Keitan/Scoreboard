@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>得点板<title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="/socket.io/socket.io.js"></script>
+        <style>
+            * {
+                font-size: 150px;
+            }
+
+            body {
+                text-align: center;
+            }
+            
+            .name {
+                font-size: 100px;
+            }
+
+            .score, .scoreSize {
+                font-size: 200px;
+            }
+            
+            .left {
+                margin: 0 10px 0 0;
+            }
+            
+            .right {
+                margin: 0 0 0 10px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="name">
+            <span id="left" class="left"></span>
+            ：
+            <span id="right" class="right"></span>
+        </div>
+        <div class="score">
+            <span id="leftCnt" class="left scoreSize">0</span>
+            ：
+            <span id="rightCnt" class="right scoreSize">0</span>
+        </div>
+        <script>
+        const socketio = io();
+        
+        socketio.on('name',function(name){
+            var names = name.split('=');
+            document.getElementById('left').innerText = names[0];
+            document.getElementById('right').innerText = names[1];
+        });
+        socketio.on('left',function(left){
+            document.getElementById('leftCnt').innerText = String(left);
+            if(left >= 8){document.getElementById('leftCnt').style='color:red'}else{document.getElementById('leftCnt').style='color:black'}
+        });
+        socketio.on('right',function(right){
+            document.getElementById('rightCnt').innerText = String(right);
+            if(right >= 8){document.getElementById('rightCnt').style='color:red'}else{document.getElementById('rightCnt').style='color:black'}
+        });
+        socketio.on('reset',function(reset){
+            location.reload();
+        });
+        </script>
+    </body>
+</html>
