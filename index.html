@@ -47,7 +47,7 @@
         const socketio = io();
 
         function finish(finishUser) {
-            document.getElementById('score').innerText = finishUser+'の勝ち！';
+            document.getElementById('score').innerHTML = '<font color="red" style="font-size:200px;">'+finishUser+'</font><br>の勝ち！';
         }
         
         socketio.on('name',function(name){
