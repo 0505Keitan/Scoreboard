@@ -43,6 +43,7 @@
         var rightCount = 0;
 		
 		function setting() {
+			if(leftName.value.length + rightName.value.length >= 13){alert('名前は6文字以下で設定してください。');return;}
 			socketio.emit('name', leftName.value+'='+rightName.value);
 			left.value = leftName.value+'　+1';
 			right.value = rightName.value+'　+1';
