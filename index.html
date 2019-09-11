@@ -52,11 +52,11 @@
         });
         socketio.on('left',function(left){
             document.getElementById('leftCnt').innerText = String(left);
-            if(left >= 8){document.getElementById('leftCnt').style='color:red'}else{document.getElementById('leftCnt').style='color:black'}
+            if(left >= 9){document.getElementById('leftCnt').style='color:red'}else{document.getElementById('leftCnt').style='color:black'}
         });
         socketio.on('right',function(right){
             document.getElementById('rightCnt').innerText = String(right);
-            if(right >= 8){document.getElementById('rightCnt').style='color:red'}else{document.getElementById('rightCnt').style='color:black'}
+            if(right >= 9){document.getElementById('rightCnt').style='color:red'}else{document.getElementById('rightCnt').style='color:black'}
         });
         socketio.on('reset',function(reset){
             location.reload();
