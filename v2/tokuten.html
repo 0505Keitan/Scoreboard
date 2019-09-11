@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>settings</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="/socket.io/socket.io.js"></script>
+		<style>
+			* {
+				font-size: 40px;
+			}
+			body {
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		左：<input id="leftName"><br>
+		右：<input id="rightName"><br>
+		<button onclick="setting()">名前設定</button>
+		<br>
+		<input type="button" id="left" class="btn" value="左　+1" onclick="leftBtn()">
+		<input type="button" id="right" class="btn" value="右　+1" onclick="rightBtn()">
+		<br>
+		<br>
+		<input type="button" id="left" class="btn" value="左　-1" onclick="leftBtnMin()">
+		<input type="button" id="right" class="btn" value="右　-1" onclick="rightBtnMin()">
+		<br>
+		<input type="button" id="reset" class="btn" value="リセット" onclick="reset()">
+		<br>
+		<div style="width:50%;overflow:scroll;-webkit-overflow-scrolling:touch;border:solid 1px;">
+  <iframe height="550" name="sample" sandbox="allow-scripts" src="/sec/" style="transform:scale(0.5);-moz-transform:scale(0.5);-webkit-transform:scale(0.5);-o-transform:scale(0.5);-ms-transform:scale(0.5);transform-origin:0 0;-moz-transform-origin:0 0;-webkit-transform-origin:0 0;-o-transform-origin:0 0;-ms-transform-origin:0 0;border:solid 1px;margin-bottom:-300px;margin-right:-100%;width:200%;">この部分はインラインフレームを使用しています。
+  </iframe>
+</div>
+		<script>
+		const socketio = io();
+		const leftName = document.getElementById('leftName');
+		const rightName = document.getElementById('rightName');
+		const left = document.getElementById('left');
+		const right = document.getElementById('right');
+		
+		var leftCount = 0;
+        var rightCount = 0;
+		
+		function setting() {
+			if((leftName.value || rightName.value) === ''){alert('名前を設定してください。');return}else if(leftName.value.length + rightName.value.length >= 13){alert('名前は6文字以下で設定してください。');return;}
+			socketio.emit('name2', leftName.value+'='+rightName.value);
+			left.value = leftName.value+'　+1';
+			right.value = rightName.value+'　+1';
+		}
+
+		function leftBtn() {
+            leftCount++;
+            socketio.emit('left2', leftCount);
+        }
+        
+        function rightBtn() {
+            rightCount++;
+            socketio.emit('right2', rightCount);
+		}
+		
+		function leftBtnMin() {
+			if(leftCount === 0)return;
+			leftCount--;
+			socketio.emit('left2', leftCount);
+		}
+
+		function rightBtnMin() {
+			if(rightCount === 0)return;
+			rightCount--;
+			socketio.emit('right2', rightCount);
+		}
+
+		function reset() {
+			leftCount = 0;
+			rightCount = 0;
+			leftName.value = '';
+			rightName.value = '';
+			left.value = '左　+1';
+			right.value = '右　+1';
+			socketio.emit('reset2', true);
+		}
+		</script>
+	</body>
+</html>

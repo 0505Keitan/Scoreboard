@@ -12,6 +12,14 @@ app.get('/setting', function(req, res){
     res.sendFile(__dirname+'/tokuten.html');
 });
 
+app.get('/sec/' , function(req, res){
+    res.sendFile(__dirname+'/v2/index.html');
+});
+
+app.get('/sec/setting', function(req, res){
+    res.sendFile(__dirname+'/v2/tokuten.html');
+});
+
 
 io.on('connection',function(socket){
     socket.on('name',function(name){
@@ -25,6 +33,19 @@ io.on('connection',function(socket){
     });
     socket.on('reset', function(reset){
         io.emit('reset', reset);
+    });
+
+    socket.on('name2',function(name){
+        io.emit('name2', name);
+    });
+    socket.on('left2',function(left){
+        io.emit('left2', left);
+    });
+    socket.on('right2',function(right){
+        io.emit('right2', right);
+    });
+    socket.on('reset2', function(reset){
+        io.emit('reset2', reset);
     });
 });
 

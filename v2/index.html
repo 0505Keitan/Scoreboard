@@ -50,22 +50,22 @@
             document.getElementById('score').innerText = finishUser+'の勝ち！';
         }
         
-        socketio.on('name',function(name){
+        socketio.on('name2',function(name){
             var names = name.split('=');
             document.getElementById('left').innerText = names[0];
             document.getElementById('right').innerText = names[1];
         });
-        socketio.on('left',function(left){
+        socketio.on('left2',function(left){
             document.getElementById('leftCnt').innerText = String(left);
             if(left >= 9){document.getElementById('leftCnt').style='color:red'}else{document.getElementById('leftCnt').style='color:black'}
             if(left === 11)finish(document.getElementById('left').innerText);
         });
-        socketio.on('right',function(right){
+        socketio.on('right2',function(right){
             document.getElementById('rightCnt').innerText = String(right);
             if(right >= 9){document.getElementById('rightCnt').style='color:red'}else{document.getElementById('rightCnt').style='color:black'}
             if(right === 11)finish(document.getElementById('right').innerText);
         });
-        socketio.on('reset',function(reset){
+        socketio.on('reset2',function(reset){
             location.reload();
         });
         </script>
