@@ -15,8 +15,8 @@
 		</style>
 	</head>
 	<body>
-		左：<input id="leftName" required><br>
-		右：<input id="rightName" required><br>
+		左：<input id="leftName"><br>
+		右：<input id="rightName"><br>
 		<button onclick="setting()">名前設定</button>
 		<br>
 		<input type="button" id="left" class="btn" value="左　+1" onclick="leftBtn()">
@@ -43,7 +43,7 @@
         var rightCount = 0;
 		
 		function setting() {
-			if(leftName.value.length + rightName.value.length >= 13){alert('名前は6文字以下で設定してください。');return;}
+			if((leftName.value || rightName.value) === ''){alert('名前を設定してください。');return}else if(leftName.value.length + rightName.value.length >= 13){alert('名前は6文字以下で設定してください。');return;}
 			socketio.emit('name', leftName.value+'='+rightName.value);
 			left.value = leftName.value+'　+1';
 			right.value = rightName.value+'　+1';
@@ -72,9 +72,13 @@
 		}
 
 		function reset() {
-			socketio.emit('reset', true);
 			leftCount = 0;
 			rightCount = 0;
+			leftName.value = '';
+			rightName.value = '';
+			left.value = '左　+1';
+			right.value = '右　+1';
+			socketio.emit('reset', true);
 		}
 		</script>
 	</body>

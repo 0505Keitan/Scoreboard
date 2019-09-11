@@ -25,6 +25,11 @@
             .right {
                 margin: 0 0 0 10px 0;
             }
+
+            .gameFont {
+                font-size: 50px;
+                color: gray;
+            }
         </style>
     </head>
     <body>
@@ -38,9 +43,14 @@
             ：
             <span id="rightCnt" class="right scoreSize">0</span>
         </div>
+        <!--
+        <div class="game" id="game">
+            <span id="leftGame" class="left gameFont">0</span>
+            <span id="rightGame" class="right gameFont">0</span>
+        </div>
+        -->
         <script>
         const socketio = io();
-        var timeoutID;
 
         function finish(finishUser) {
             document.getElementById('score').innerText = finishUser+'の勝ち！';
@@ -55,6 +65,7 @@
             document.getElementById('leftCnt').innerText = String(left);
             if(left >= 9){document.getElementById('leftCnt').style='color:red'}else{document.getElementById('leftCnt').style='color:black'}
             if(left === 11)finish(document.getElementById('left').innerText);
+            //if(left >= 12);
         });
         socketio.on('right',function(right){
             document.getElementById('rightCnt').innerText = String(right);
@@ -63,7 +74,6 @@
         });
         socketio.on('reset',function(reset){
             location.reload();
-            window.clearTimeout(finishId);
         });
         </script>
     </body>
