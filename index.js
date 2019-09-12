@@ -9,7 +9,7 @@ app.get('/' , function(req, res){
 });
 
 app.get('/setting', function(req, res){
-    res.sendFile(__dirname+'/tokuten.html');
+    res.sendFile(__dirname+'/setting.html');
 });
 
 app.get('/sec/' , function(req, res){
@@ -17,11 +17,16 @@ app.get('/sec/' , function(req, res){
 });
 
 app.get('/sec/setting', function(req, res){
-    res.sendFile(__dirname+'/v2/tokuten.html');
+    res.sendFile(__dirname+'/v2/setting.html');
 });
 
 
 io.on('connection',function(socket){
+
+    io.sockets.emit('count', socket.client.conn.server.clientsCount);
+    socket.on('disconnect', function(data) {
+        io.sockets.emit('count', socket.client.conn.server.clientsCount);
+    });
 
     socket.on('name',function(name){
         io.emit('name', name);
