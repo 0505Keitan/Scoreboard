@@ -22,6 +22,7 @@ app.get('/sec/setting', function(req, res){
 
 
 io.on('connection',function(socket){
+
     socket.on('name',function(name){
         io.emit('name', name);
     });
