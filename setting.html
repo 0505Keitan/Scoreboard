@@ -44,16 +44,15 @@
 		var rightCount = 0;
 
 		document.addEventListener('keydown', (event) => {
-			var keyName = event.key;
-			if(keyName === 'ArrowLeft'){
+			if(event.key === 'ArrowLeft'){
 				leftBtn();
-			}else if(keyName === 'ArrowRight'){
+			}else if(event.key === 'ArrowRight'){
 				rightBtn();
-			}else if(keyName === ','){
+			}else if(event.key === ','){
 				leftBtnMin();
-			}else if(keyName === '.'){
+			}else if(event.key === '.'){
 				rightBtnMin();
-			}else if(keyName === 'r'){
+			}else if(event.key === 'r'){
 				reset();
 			}
 		});
