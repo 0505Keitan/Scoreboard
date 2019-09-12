@@ -23,11 +23,6 @@ app.get('/sec/setting', function(req, res){
 
 io.on('connection',function(socket){
 
-    io.sockets.emit('count', socket.client.conn.server.clientsCount);
-    socket.on('disconnect', function(data) {
-        io.sockets.emit('count', socket.client.conn.server.clientsCount);
-    });
-
     socket.on('name',function(name){
         io.emit('name', name);
     });
