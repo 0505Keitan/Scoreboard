@@ -68,6 +68,12 @@
         socketio.on('reset',function(reset){
             location.reload();
         });
+
+
+        document.addEventListener('keydown', (event) => {
+         var keyName = event.key;
+         console.log(`keydown:${keyName}`);
+       });
         </script>
     </body>
 </html>
