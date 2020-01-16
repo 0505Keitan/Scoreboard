@@ -20,4 +20,3 @@ jobs:
     - name: nodejs
       run: |
         npm install
-        node index.js
