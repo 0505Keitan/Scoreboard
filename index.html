@@ -1,79 +1,38 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>得点板</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="/socket.io/socket.io.js"></script>
-        <style>
-            * {
-                font-size: 100px;
-            }
-
-            body {
-                text-align: center;
-            }
-
-            .score, .scoreSize {
-                font-size: 200px;
-            }
-            
-            .left {
-                margin: 0 10px 0 0;
-            }
-            
-            .right {
-                margin: 0 0 0 10px 0;
-            }
-
-            .gameFont {
-                font-size: 50px;
-                color: gray;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="name">
-            <span id="left" class="left"></span>
-            ：
-            <span id="right" class="right"></span>
-        </div>
-        <div class="score" id="score">
-            <span id="leftCnt" class="left scoreSize">0</span>
-            ：
-            <span id="rightCnt" class="right scoreSize">0</span>
-        </div>
-        <script>
-        const socketio = io();
-
-        function finish(finishUser) {
-            document.getElementById('score').innerHTML = '<font color="red" style="font-size:200px;">'+finishUser+'</font><br>の勝ち！';
-        }
-        
-        socketio.on('name',function(name){
-            var names = name.split('=');
-            document.getElementById('left').innerText = names[0];
-            document.getElementById('right').innerText = names[1];
-        });
-        socketio.on('left',function(left){
-            document.getElementById('leftCnt').innerText = String(left);
-            if(left >= 9){document.getElementById('leftCnt').style='color:red'}else{document.getElementById('leftCnt').style='color:black'}
-            if(left === 11)finish(document.getElementById('left').innerText);
-        });
-        socketio.on('right',function(right){
-            document.getElementById('rightCnt').innerText = String(right);
-            if(right >= 9){document.getElementById('rightCnt').style='color:red'}else{document.getElementById('rightCnt').style='color:black'}
-            if(right === 11)finish(document.getElementById('right').innerText);
-        });
-        socketio.on('reset',function(reset){
-            location.reload();
-        });
-
-
-        document.addEventListener('keydown', (event) => {
-         var keyName = event.key;
-         console.log(`keydown:${keyName}`);
-       });
-        </script>
-    </body>
+	<head>
+		<meta charset="utf-8">
+		<title>Scoreboard</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="/css/index.css">
+	</head>
+	<body>
+		<nav class="header">
+			<a class="title" href="#">Scoreboard</a>
+			<a class="link" href="/control">使ってみる</a>
+		</nav>
+		<div class="container">
+			<div class="control">
+				<div class="service">
+					<h1>シンプルな<span>スコアボード</span></h1>
+					<p>さまざまな場面で利用できるスコアボードです。2つ以上デバイスを用意するだけで簡単に利用ができます。</p>
+				</div>
+				<h2>使いやすい操作画面</h2>
+				<p>ボタンは最低限にし、どのサイズのデバイスでも押しやすいように大きめに設計。</p>
+				<img width="100%" src="/images/control-panel-sample.png">
+				<h2>見やすいスコア表示画面</h2>
+				<p>プレイヤー名とスコアだけのシンプルな構成。</p>
+				<img width="100%" src="/images/view-sample.png">
+				<h2>面倒な会員登録必要なし！</h2>
+				<p>面倒な会員登録は必要ありません。デバイスを２つ以上用意すればすぐに利用できます！</p>
+				<h2>つかいかた</h2>
+				<ol>
+					<li>右上の「使ってみる」か<a href="/control"> ここ </a>からコントロールパネルにアクセスします。</li>
+					<li>結果表示画面にアクセスするための あいことば と プレイヤー名 を設定してURLを発行します。</li>
+					<li>表示用URLに結果表示に使いたいデバイスでアクセスします。</li>
+					<li>あとはスコアに応じてボタンを押していくだけ！リセットを押すとスコアがリセットされます。</li>
+				</ol>
+			</div>
+		</div>
+	</body>
 </html>

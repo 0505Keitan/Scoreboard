@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css?family=Kosugi+Maru&display=swap');
+body {
+    line-height: 1.5;
+}
+a {
+    text-decoration: none;
+}
+li {
+    margin: 0 0 10px;
+}
+span {
+    display: inline-block;
+}
+.header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    color: #FFF;
+    background-color: #313131;
+    padding: 0.5rem 1rem;
+}
+.title {
+    padding: 5px;
+    display: inline-block;
+    font-size: 20px;
+    color: #FFF;
+}
+.link {
+    padding: 5px;
+    font-size: 15px;
+    color: #FFF;
+    float: right;
+}
+.container {
+    padding-top: 70px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1140px;
+}
+.control {
+    padding: 1rem 2rem;
+    background-color: #e9ecef;
+    border-radius: .3rem;
+    font-size: 1.25rem;
+}
+.service {
+    padding: 0 0 50px 0;
+}
+.service p {
+    font-size: 25px;
+    font-family: 'Kosugi Maru', sans-serif;
+}
+@media screen and (max-width: 480px) {
+    .container {
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+    .control {
+        padding: 1rem 0.5rem;
+    }
+}

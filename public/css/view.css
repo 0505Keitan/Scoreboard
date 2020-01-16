@@ -1,0 +1,27 @@
+table {
+    width: 100%;
+    height: 100%;
+    font-size: 100px;
+}
+td, th {
+    padding: 50px;
+}
+.left {
+    margin: 0 10px 0 0;
+    width: 50%;
+}
+.right {
+    margin: 0 0 0 10px 0;
+    width: 50%;
+}
+.winner {
+    color: red;
+    font-size: 200px;
+}
+
+@media screen and (max-width: 1024px) {
+    table {
+        font-size: 100px; }
+    td, th {
+        padding: 10px; }
+}

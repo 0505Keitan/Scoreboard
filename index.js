@@ -1,25 +1,22 @@
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
+const express = require('express');
+const app = express();
+const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const PORT = process.env.PORT || 3000;
+
+app.use(express.static(__dirname + '/public'));
 
 app.get('/' , function(req, res){
     res.sendFile(__dirname+'/index.html');
 });
 
-app.get('/setting', function(req, res){
-    res.sendFile(__dirname+'/setting.html');
+app.get('/view' , function(req, res){
+    res.sendFile(__dirname+'/view.html');
 });
 
-app.get('/sec/' , function(req, res){
-    res.sendFile(__dirname+'/v2/index.html');
+app.get('/control', function(req, res){
+    res.sendFile(__dirname+'/control.html');
 });
-
-app.get('/sec/setting', function(req, res){
-    res.sendFile(__dirname+'/v2/setting.html');
-});
-
 
 io.on('connection',function(socket){
     socket.on('name',function(name){
@@ -33,19 +30,6 @@ io.on('connection',function(socket){
     });
     socket.on('reset', function(reset){
         io.emit('reset', reset);
-    });
-
-    socket.on('name2',function(name){
-        io.emit('name2', name);
-    });
-    socket.on('left2',function(left){
-        io.emit('left2', left);
-    });
-    socket.on('right2',function(right){
-        io.emit('right2', right);
-    });
-    socket.on('reset2', function(reset){
-        io.emit('reset2', reset);
     });
 });
 

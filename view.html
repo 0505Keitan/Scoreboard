@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Scoreboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="/socket.io/socket.io.js"></script>
+        <link rel="stylesheet" href="/css/view.css">
+    </head>
+    <body>
+        <table>
+            <tr>
+                <th id="left" class="left"></th>
+                <th id="right" class="right"></th>
+            </tr>
+            <tr>
+                <th id="leftCnt" class="left scoreSize">0</th>
+                <th id="rightCnt" class="right scoreSize">0</th>
+            </tr>
+        </table>
+        <script>
+        const socketio = io();
+        const escape = (e) => e.replace(/</g, '').replace(/>/g, '');
+        const getId = (n) => document.getElementById(n);
+        let code;
+        if (1 < window.location.search.length) {
+            let result = {};
+            const query = window.location.search.substring(1);
+            const params = query.split("&");
+            for(i = 0; i < params.length; i++){
+                const element = params[i].split("=");
+                const paramName = decodeURIComponent(element[0]);
+                const paramValue = decodeURIComponent(element[1]);
+                result[paramName] = paramValue;
+            }
+            getId('left').innerText = decodeURI(result.left);
+            getId('right').innerText = decodeURI(result.right);
+            code = decodeURI(result.code);
+        }else{
+            alert('URLが間違っています。\n管理者から渡されたURLを利用してください。');
+            location.href = '/';
+        }
+
+        socketio.on('name', function(name){
+            if(code===name.code){
+                location.href = `${window.location.origin}/view?left=${encodeURI(name.left)}&right=${encodeURI(name.right)}&code=${encodeURI(name.code)}`
+            }
+        });
+        socketio.on('left', function(left){
+            if(code===left.code) getId('leftCnt').innerText = String(left.count);
+        });
+        socketio.on('right', function(right){
+            if(code===right.code) getId('rightCnt').innerText = String(right.count);
+        });
+        socketio.on('reset', function(reset){
+            if(code===reset.code){
+                getId('leftCnt').innerText = '0';
+                getId('rightCnt').innerText = '0';
+            }
+        });
+        </script>
+    </body>
+</html>

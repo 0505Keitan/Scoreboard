@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Scoreboard</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="/socket.io/socket.io.js"></script>
+		<link rel="stylesheet" href="/css/control.css">
+	</head>
+	<body>
+		<nav class="header">
+			<a class="title" href="/">Scoreboard</a>
+		</nav>
+		<div class="container">
+			<div class="control">
+				<input id="code" class="input" placeholder="あいことばを入力">
+				<div class="name">
+					<input id="leftName" class="input" placeholder="名前を入力">
+					<input id="rightName" class="input" placeholder="名前を入力">
+				</div>
+				<div class="view">
+					<p id="leftScore" class="leftScore">0</p>
+					<p id="rightScore" class="rightScore">0</p>
+				</div>
+				<div class='view'>
+					<input type="button" class="btn scoreBtn" value="+1" onclick="leftBtn()">
+					<input type="button" class="btn scoreBtn" value="+1" onclick="rightBtn()">
+				</div>
+				<div class="view">
+					<input type="button" class="btn scoreMinusBtn" value="-1" onclick="leftBtnMin()">
+					<input type="button" class="btn scoreMinusBtn" value="-1" onclick="rightBtnMin()">
+				</div>
+				<div class="enter">
+					<input type="button" id="register" value="URL発行" class="btn submit" onclick="setting()">
+					<input type="button" id="reset" class="btn submit" value="スコアリセット" onclick="reset()">
+					<span id="news"></span>
+				</div>
+				<p id="hidden" style="display: none;">表示用URL：<input id="share" class="share" readonly></p>
+			</div>
+		</div>
+		<script>
+			const getId = (n) => document.getElementById(n);
+			const socketio = io();
+			const leftName = getId('leftName');
+			const rightName = getId('rightName');
+			let leftCount = 0;
+			let rightCount = 0;
+			let isStarted = false;
+
+			/*
+			document.addEventListener('keydown', (event) => {
+				switch(event.key) {
+					case 'ArrowLeft':
+						leftBtn();
+						break;
+					case 'ArrowRight':
+						rightBtn();
+						break;
+					case ',':
+						leftBtnMin();
+						break;
+					case '.':
+						rightBtnMin();
+						break;
+					case 'r':
+						reset();
+						break;
+				}
+			});
+			*/
+
+			const setting = () => {
+				if((getId('leftName').value && getId('rightName').value) === ''){
+					alert('名前を設定してください。');
+					return;
+				}else if(getId('code').value === ''){
+					alert('あいことばを入力してください。');
+					return;
+				}
+				socketio.emit('name', {
+					left: getId('leftName').value,
+					right: getId('rightName').value,
+					code: getId('code').value
+				});
+				getId('share').value = `${window.location.origin}/view?left=${encodeURI(getId('leftName').value)}&right=${encodeURI(getId('rightName').value)}&code=${encodeURI(getId('code').value)}`;
+				getId('hidden').style.display = '';
+				if(!isStarted){
+					getId('news').innerText = 'URLを発行しました！';
+					leftCount = 0;
+					rightCount = 0;
+					getId('leftScore').innerText = leftCount;
+					getId('rightScore').innerText = rightCount;
+					getId('register').value = '設定を適用';
+					isStarted=!isStarted;
+				}else{
+					getId('news').innerText = '適用しました！';
+				}
+				setTimeout(function() {
+					getId('news').innerText = '';
+				}, 2000);
+			}
+
+			getId('share').onclick = function() {
+				this.select();
+				document.execCommand("copy");
+				getId('news').innerText = 'コピーしました！';
+				setTimeout(function() {
+					getId('news').innerText = '';
+				}, 2000);
+			}
+
+			const leftBtn = () => {
+				if((getId('leftName').value && getId('rightName').value && getId('code').value) === ''){
+					alert('URLを発行してください。');
+					return;
+				}
+				leftCount++;
+				socketio.emit('left', {
+					count: leftCount,
+					code: getId('code').value
+				});
+				getId('leftScore').innerText = leftCount;
+			}
+			const rightBtn = () => {
+				if((getId('leftName').value && getId('rightName').value && getId('code').value) === ''){
+					alert('URLを発行してください。');
+					return;
+				}
+				rightCount++;
+				socketio.emit('right', {
+					count: rightCount,
+					code: getId('code').value
+				});
+				getId('rightScore').innerText = rightCount;
+			}
+
+			const leftBtnMin = () => {
+				if((getId('leftName').value && getId('rightName').value && getId('code').value) === ''){
+					alert('URLを発行してください。');
+					return;
+				}
+				if(leftCount === 0)return;
+				leftCount--;
+				socketio.emit('left', {
+					count: leftCount,
+					code: getId('code').value
+				});
+				getId('leftScore').innerText = leftCount;
+			}
+
+			const rightBtnMin = () => {
+				if((getId('leftName').value && getId('rightName').value && getId('code').value) === ''){
+					alert('URLを発行してください。');
+					return;
+				}
+				if(rightCount === 0)return;
+				rightCount--;
+				socketio.emit('right', {
+					count: rightCount,
+					code: getId('code').value
+				});
+				getId('rightScore').innerText = rightCount;
+			}
+
+			const reset = () => {
+				if((getId('leftName').value && getId('rightName').value && getId('code').value) === ''){
+					alert('URLを発行してください。');
+					return;
+				}
+				leftCount = 0;
+				rightCount = 0;
+				socketio.emit('reset', {
+					reset: true,
+					code: getId('code').value
+				});
+				getId('leftScore').innerText = leftCount;
+				getId('rightScore').innerText = rightCount;
+				getId('news').innerText = 'スコアをリセットしました！';
+				setTimeout(function() {
+					getId('news').innerText = '';
+				}, 2000);
+			}
+		</script>
+	</body>
+</html>
