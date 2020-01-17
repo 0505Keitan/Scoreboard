@@ -33,7 +33,7 @@ io.on('connection',function(socket){
     });
 });
 
-if(process.argv[2] === 'ci')process.exit(0);
+if(process.argv[2] === 'ci'){console.log('Clear!');process.exit(0)}
 
 http.listen(PORT, function(){
     console.log(PORT);
