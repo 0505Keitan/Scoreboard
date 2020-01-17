@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(__dirname + '/public'));
 
 app.get('/' , function(req, res){
-    es.sendFile(__dirname+'/index.html');
+    res.sendFile(__dirname+'/index.html');
 });
 
 app.get('/view' , function(req, res){
@@ -32,8 +32,6 @@ io.on('connection',function(socket){
         io.emit('reset', reset);
     });
 });
-
-if(process.argv[2] === 'ci'){console.log('Clear!');process.exit(0)}
 
 http.listen(PORT, function(){
     console.log(PORT);
