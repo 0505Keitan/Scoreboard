@@ -12,18 +12,29 @@ a {
     color: #FFF;
     background-color: #313131;
     padding: 0.5rem 1rem;
+    display: flex;
+}
+.title {
+    padding: 5px;
+    display: inline-block;
+    font-size: 1.25rem;
+    color: #FFF;
+    margin-right: 1rem;
+}
+.top-manu {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+}
+.link {
+    color: #FFF;
+    margin: 0 10px 0 0;
 }
 .title {
     padding: 5px;
     display: inline-block;
     font-size: 20px;
     color: #FFF;
-}
-.link {
-    padding: 5px;
-    font-size: 15px;
-    color: #FFF;
-    float: right;
 }
 .container {
     padding-top: 70px;

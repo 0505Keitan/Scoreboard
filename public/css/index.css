@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Kosugi+Maru&display=swap');
 body {
     line-height: 1.5;
+    margin: 0;
 }
 a {
     text-decoration: none;
@@ -11,6 +12,16 @@ li {
 span {
     display: inline-block;
 }
+footer {
+    margin: 50px 0 0 0;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    color: #FFF;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #313131;
+}
 .header {
     position: fixed;
     top: 0;
@@ -19,18 +30,23 @@ span {
     color: #FFF;
     background-color: #313131;
     padding: 0.5rem 1rem;
+    display: flex;
 }
 .title {
     padding: 5px;
     display: inline-block;
-    font-size: 20px;
+    font-size: 1.25rem;
     color: #FFF;
+    margin-right: 1rem;
+}
+.top-manu {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
 }
 .link {
-    padding: 5px;
-    font-size: 15px;
     color: #FFF;
-    float: right;
+    margin: 0 10px 0 0;
 }
 .container {
     padding-top: 70px;
@@ -52,6 +68,23 @@ span {
 .service p {
     font-size: 25px;
     font-family: 'Kosugi Maru', sans-serif;
+}
+.description {
+    margin: 100px 0 0 0;
+}
+.footer-container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1140px;
+}
+.footer-container p {
+    margin-bottom: 0.25rem;
+}
+.footer-container .title {
+    font-weight: bold;
+    padding: 5px 0;
 }
 @media screen and (max-width: 480px) {
     .container {
