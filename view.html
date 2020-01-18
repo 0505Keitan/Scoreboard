@@ -42,9 +42,7 @@
         }
 
         socketio.on('name', function(name){
-            if(code===name.code){
-                location.href = `${window.location.origin}/view?left=${encodeURI(name.left)}&right=${encodeURI(name.right)}&code=${encodeURI(name.code)}`
-            }
+            if(code===name.code) location.href = `${window.location.origin}/view?left=${encodeURI(name.left)}&right=${encodeURI(name.right)}&code=${encodeURI(name.code)}`
         });
         socketio.on('left', function(left){
             if(code===left.code) getId('leftCnt').innerText = String(left.count);
