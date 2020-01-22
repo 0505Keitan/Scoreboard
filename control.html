@@ -51,6 +51,9 @@
 			let rightCount = 0;
 			let isStarted = false;
 
+			const SOURCE = "abcdefghijklmnopqrstuvwxyz0123456789";
+			let result = '';
+
 			/*
 			document.addEventListener('keydown', (event) => {
 				switch(event.key) {
@@ -78,7 +81,13 @@
 					alert('名前を設定してください。');
 					return;
 				}else if(getId('code').value === ''){
-					alert('あいことばを入力してください。');
+					result = '';
+					for(let i=0; i<16; i++){
+						result += SOURCE[Math.floor(Math.random() * SOURCE.length)];
+					}
+					getId('code').value = result;
+				}else if(getId('code').value.length <= 5){
+					alert('あいことばは5文字以下にすることはできません。\n6文字以上にするか自動生成させてください。');
 					return;
 				}
 				socketio.emit('name', {
