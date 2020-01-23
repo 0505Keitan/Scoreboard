@@ -107,6 +107,10 @@
 					isStarted=!isStarted;
 				}else{
 					getId('news').innerText = '適用しました！';
+					leftCount = 0;
+					rightCount = 0;
+					getId('leftScore').innerText = leftCount;
+					getId('rightScore').innerText = rightCount;
 				}
 				setTimeout(function() {
 					getId('news').innerText = '';
